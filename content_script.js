@@ -4,6 +4,13 @@ const createButtonContainer = () => {
   return container;
 };
 
+function autoGenerateMoveMessagesQueueName(isDeadLetterQueue, originalQueue) {
+  if (isDeadLetterQueue) {
+    const inputContainer = getMoveMessagesInput();
+    inputContainer.value = originalQueue;
+  }
+}
+
 const createButton = (label) => {
   const button = document.createElement("div");
 
@@ -111,10 +118,7 @@ const attachPlugin = () => {
       onChange();
     };
 
-    if (isDeadLetterQueue) {
-      const inputContainer = getMoveMessagesInput();
-      inputContainer.value = originalQueue;
-    }
+    autoGenerateMoveMessagesQueueName(isDeadLetterQueue, originalQueue);
 
     const plugin = document.createElement("div");
     plugin.id = "rmqJsonPlugin";
